@@ -11,6 +11,7 @@ require (
 	github.com/prometheus/common v0.7.0 // indirect
 	github.com/prometheus/procfs v0.0.7 // indirect
 	github.com/spf13/cobra v0.0.5
+	github.ibm.com/panpxpx/klsf v0.0.0-00010101000000-000000000000
 	go.etcd.io/etcd v0.5.0-alpha.5.0.20191023171146-3cf2f69b5738 // indirect
 	go.uber.org/multierr v1.4.0 // indirect
 	go.uber.org/zap v1.13.0 // indirect
@@ -30,6 +31,7 @@ require (
 )
 
 replace (
+	github.ibm.com/panpxpx/klsf => /Users/pengli/go/src/github.ibm.com/panpxpx/klsf
 	k8s.io/api => k8s.io/api v0.0.0-20191122220107-b5267f2975e0
 	k8s.io/apiextensions-apiserver => k8s.io/apiextensions-apiserver v0.0.0-20191122222427-64482ea217ff
 	k8s.io/apimachinery => k8s.io/apimachinery v0.0.0-20191121175448-79c2a76c473a

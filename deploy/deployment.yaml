@@ -19,8 +19,13 @@ data:
       preBind:
         enabled:
         - name: "sample"
+      permit:
+        enabled:
+        - name: gang
     pluginConfig:
     - name: "sample"
+      args: {"master": "master", "kubeconfig": "kubeconfig"}
+    - name: "gang"
       args: {"master": "master", "kubeconfig": "kubeconfig"}
 ---
 apiVersion: apps/v1
