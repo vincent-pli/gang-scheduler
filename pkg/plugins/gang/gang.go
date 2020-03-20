@@ -34,7 +34,7 @@ import (
 
 // Name is the name of the plugin used in the plugin registry and configurations.
 const (
-	Name          = "Gang"
+	Name          = "gang"
 	jobNamek      = "job-name"
 	jobNamespacek = "job-namespace"
 )
@@ -56,7 +56,7 @@ type Args struct {
 var _ framework.PermitPlugin = &Gang{}
 
 // Name returns name of the plugin.
-func (pl *Gang) Name() string {
+func (g *Gang) Name() string {
 	return Name
 }
 
@@ -143,6 +143,7 @@ func (g *Gang) Permit(ctx context.Context, state *framework.CycleState, pod *v1.
 
 // New initializes a new plugin and returns it.
 func New(plArgs *runtime.Unknown, handle framework.FrameworkHandle) (framework.Plugin, error) {
+	fmt.Println("gang plugtin new--->")
 	waitDuration, err := time.ParseDuration("1h")
 	if err != nil {
 		return nil, err

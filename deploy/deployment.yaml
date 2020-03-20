@@ -21,7 +21,7 @@ data:
         - name: "sample"
       permit:
         enabled:
-        - name: gang
+        - name: "gang"
     pluginConfig:
     - name: "sample"
       args: {"master": "master", "kubeconfig": "kubeconfig"}
@@ -53,7 +53,7 @@ spec:
           name: scheduler-config
       containers:
       - name: scheduler-ctrl
-        image: index.docker.io/vincentpli/scheduler-framework-sample:v0.0.1
+        image: index.docker.io/vincentpli/scheduler-framework-sample:v0.0.3
         imagePullPolicy: IfNotPresent
         args:
         - scheduler-framework-sample
