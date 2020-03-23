@@ -26,6 +26,8 @@ import (
 	"k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/types"
+	clientgoscheme "k8s.io/client-go/kubernetes/scheme"
+	"k8s.io/klog"
 	framework "k8s.io/kubernetes/pkg/scheduler/framework/v1alpha1"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	clientx "sigs.k8s.io/controller-runtime/pkg/client"
@@ -46,6 +48,7 @@ type Gang struct {
 	args         *Args
 	handle       framework.FrameworkHandle
 	waitDuration time.Duration
+	client       clientx.Client
 }
 
 type Args struct {
@@ -82,17 +85,13 @@ func (g *Gang) Permit(ctx context.Context, state *framework.CycleState, pod *v1.
 	job := &batchv1alpha1.LSFJob{}
 	namespacename := types.NamespacedName{Name: jobName, Namespace: jobNamespace}
 
-	c, err := clientx.New(config.GetConfigOrDie(), client.Options{})
-	if err != nil {
-		framework.NewStatus(framework.Error, err.Error())
-	}
-
-	err = c.Get(context.TODO(), namespacename, job)
+	err := g.client.Get(context.TODO(), namespacename, job)
 	if err != nil {
 		if errors.IsNotFound(err) {
 			fmt.Printf("pod related job: <%s/%s> not found", jobNamespace, jobName)
 		}
-		framework.NewStatus(framework.Error, err.Error())
+		klog.V(3).Infof("error happend: %+v", err)
+		return framework.NewStatus(framework.Error, err.Error()), g.waitDuration
 	}
 
 	// labelSet := labelsx.Set{
@@ -120,26 +119,8 @@ func (g *Gang) Permit(ctx context.Context, state *framework.CycleState, pod *v1.
 		return framework.NewStatus(framework.Wait, ""), g.waitDuration
 	}
 
-	// pods, err := g.handle.SnapshotSharedLister().Pods().List(labelSet.AsSelector())
-	// if err != nil {
-	// 	framework.NewStatus(framework.Error, err.Error())
-	// }
-
-	// for index, pod := range pods {
-
-	// }
-
-	// nodeInfo, err := g.handle.SnapshotSharedLister().NodeInfos().Get(nodeName)
-	// if err != nil {
-	// 	return framework.NewStatus(framework.Error, err.Error())
-	// }
-
 	return framework.NewStatus(framework.Success, ""), g.waitDuration
 }
-
-// func Config(client clientX.Client) {
-// 	client = client
-// }
 
 // New initializes a new plugin and returns it.
 func New(plArgs *runtime.Unknown, handle framework.FrameworkHandle) (framework.Plugin, error) {
@@ -154,9 +135,19 @@ func New(plArgs *runtime.Unknown, handle framework.FrameworkHandle) (framework.P
 		return nil, err
 	}
 
+	scheme := runtime.NewScheme()
+	_ = clientgoscheme.AddToScheme(scheme)
+	_ = batchv1alpha1.AddToScheme(scheme)
+
+	c, err := clientx.New(config.GetConfigOrDie(), client.Options{Scheme: scheme})
+	if err != nil {
+		return nil, err
+	}
+
 	return &Gang{
 		args:         args,
 		handle:       handle,
 		waitDuration: waitDuration,
+		client:       c,
 	}, nil
 }

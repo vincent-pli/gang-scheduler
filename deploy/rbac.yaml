@@ -132,6 +132,26 @@ rules:
       - create
       - patch
       - update
+  - apiGroups:
+      - batch.klsf.ibm.com
+    resources:
+      - lsfjobs
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - batch.klsf.ibm.com
+    resources:
+      - lsfjobs/status
+    verbs:
+      - get
+      - patch
+      - update
 ---
 apiVersion: v1
 kind: ServiceAccount
