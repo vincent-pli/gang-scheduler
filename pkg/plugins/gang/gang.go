@@ -21,7 +21,8 @@ import (
 	"fmt"
 	"time"
 
-	batchv1alpha1 "github.ibm.com/panpxpx/klsf/api/v1alpha1"
+	batchv1alpha1 "github.com/vincent-pli/job-management/pkg/apis/job/v1alpha1"
+	apis "github.com/vincent-pli/job-management/pkg/apis"
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -82,7 +83,7 @@ func (g *Gang) Permit(ctx context.Context, state *framework.CycleState, pod *v1.
 		return framework.NewStatus(framework.Success, ""), g.waitDuration
 	}
 
-	job := &batchv1alpha1.LSFJob{}
+	job := &batchv1alpha1.XJob{}
 	namespacename := types.NamespacedName{Name: jobName, Namespace: jobNamespace}
 
 	err := g.client.Get(context.TODO(), namespacename, job)
@@ -137,7 +138,7 @@ func New(plArgs *runtime.Unknown, handle framework.FrameworkHandle) (framework.P
 
 	scheme := runtime.NewScheme()
 	_ = clientgoscheme.AddToScheme(scheme)
-	_ = batchv1alpha1.AddToScheme(scheme)
+	_ = apis.AddToScheme(scheme)
 
 	c, err := clientx.New(config.GetConfigOrDie(), client.Options{Scheme: scheme})
 	if err != nil {

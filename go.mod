@@ -11,7 +11,8 @@ require (
 	github.com/prometheus/common v0.7.0 // indirect
 	github.com/prometheus/procfs v0.0.7 // indirect
 	github.com/spf13/cobra v0.0.5
-	github.ibm.com/panpxpx/klsf v0.0.0-00010101000000-000000000000
+	github.com/vincent-pli/job-management v0.0.0-20200329134045-ef617932de08
+	//github.ibm.com/panpxpx/klsf v0.0.0-00010101000000-000000000000
 	go.etcd.io/etcd v0.5.0-alpha.5.0.20191023171146-3cf2f69b5738 // indirect
 	go.uber.org/multierr v1.4.0 // indirect
 	go.uber.org/zap v1.13.0 // indirect
@@ -23,7 +24,7 @@ require (
 	google.golang.org/grpc v1.25.1 // indirect
 	k8s.io/api v0.17.2
 	k8s.io/apimachinery v0.17.2
-	k8s.io/client-go v0.17.2
+	k8s.io/client-go v12.0.0+incompatible
 	k8s.io/klog v1.0.0
 	k8s.io/kubernetes v1.17.0
 	k8s.io/utils v0.0.0-20191114200735-6ca3b61696b6 // indirect
@@ -31,7 +32,7 @@ require (
 )
 
 replace (
-	github.ibm.com/panpxpx/klsf => /Users/pengli/go/src/github.ibm.com/panpxpx/klsf
+	//github.ibm.com/panpxpx/klsf => /Users/pengli/go/src/github.ibm.com/panpxpx/klsf
 	k8s.io/api => k8s.io/api v0.0.0-20191122220107-b5267f2975e0
 	k8s.io/apiextensions-apiserver => k8s.io/apiextensions-apiserver v0.0.0-20191122222427-64482ea217ff
 	k8s.io/apimachinery => k8s.io/apimachinery v0.0.0-20191121175448-79c2a76c473a
