@@ -12,7 +12,7 @@ import (
 
 	// "sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	"github.com/angao/scheduler-framework-sample/pkg/plugins"
+	"github.com/vincent-pli/gang-scheduler/pkg/plugins"
 )
 
 var (

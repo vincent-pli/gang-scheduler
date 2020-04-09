@@ -1,4 +1,4 @@
-module github.com/angao/scheduler-framework-sample
+module github.com/vincent-pli/gang-scheduler
 
 go 1.13
 

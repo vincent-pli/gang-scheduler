@@ -1,8 +1,8 @@
 package plugins
 
 import (
-	"github.com/angao/scheduler-framework-sample/pkg/plugins/gang"
-	"github.com/angao/scheduler-framework-sample/pkg/plugins/sample"
+	"github.com/vincent-pli/gang-scheduler/pkg/plugins/gang"
+	"github.com/vincent-pli/gang-scheduler/pkg/plugins/sample"
 	"github.com/spf13/cobra"
 	"k8s.io/kubernetes/cmd/kube-scheduler/app"
 )
